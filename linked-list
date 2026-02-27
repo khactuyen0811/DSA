@@ -1,0 +1,92 @@
+// Node class for Linked List
+class Node {
+    int data;
+    Node next;
+    
+    // Constructor
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+// LinkedList class with operations
+class LinkedList {
+    Node head;
+    
+    // 1. Append (add to end)
+    public void append(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
+    
+    // 2. Prepend (add to beginning)
+    public void prepend(int data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
+    
+    // 3. Delete by value
+    public void delete(int key) {
+        if (head == null) return;
+        
+        // If head needs to be removed
+        if (head.data == key) {
+            head = head.next;
+            return;
+        }
+        
+        Node current = head;
+        while (current.next != null && current.next.data != key) {
+            current = current.next;
+        }
+        
+        if (current.next != null) {
+            current.next = current.next.next;
+        }
+    }
+    
+    // 4. Traverse and display
+    public void display() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " -> ");
+            current = current.next;
+        }
+        System.out.println("null");
+    }
+    
+    // 5. Search for a value
+    public boolean search(int key) {
+        Node current = head;
+        while (current != null) {
+            if (current.data == key) return true;
+            current = current.next;
+        }
+        return false;
+    }
+    
+    // Main method to test
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.append(10);
+        list.append(20);
+        list.prepend(5);
+        list.display(); // 5 -> 10 -> 20 -> null
+        
+        list.delete(10);
+        list.display(); // 5 -> 20 -> null
+        
+        System.out.println("Search 20: " + list.search(20)); // true
+        System.out.println("Search 99: " + list.search(99)); // false
+    }
+}
